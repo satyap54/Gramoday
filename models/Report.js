@@ -15,6 +15,7 @@ const reportSchema = new Schema(
 
 reportSchema.index({ cmdtyId : 1, marketId : 1 }, { unique : true });
 
+// A commodity-market entity should be modified by only the two assigned people
 reportSchema.path('users').validate((arr)=>{
   if(arr.length > 2)
     throw new Error("Number of users updating the same commodity cannot be greater than 2");
