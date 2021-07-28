@@ -24,7 +24,7 @@ const postReport = async (req, res)=>{
         "marketID" : marketID,
         "marketName" : marketName,
         "users" : [userID, ],
-        "pricePerKg" : price
+        "pricePerKg" : price.toString()
       })
     }else{
       if(report.users.length == 2){
