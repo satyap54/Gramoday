@@ -31,7 +31,7 @@ const getAggregatedReport = async (req, res)=>{
       "users" : users,
       "timestamp" : moment(updatedAt).unix(),
       "priceUnit" : "Kg",
-      "price" : pricePerKg
+      "price" : pricePerKg.toString()
     });
   }catch(e){
     console.error(e);

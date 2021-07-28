@@ -30,10 +30,11 @@ const postReport = async (req, res)=>{
       if(report.users.length == 2){
         return res.status(400).send("Only 2 people can update a cmdty-market entity");
       }
-      const newPrice = (report.price + price)/2.0;
-      report.price = newPrice;
+      const prevPrice = parseFloat(report.pricePerKg.toString());
+      const newPrice = (prevPrice + price)/2.0;
+      report.pricePerKg = newPrice;
       report.users.push(userID);
-      report.save();
+      await report.save();
     }
     res.status(200).json({
       "status" : "success",
