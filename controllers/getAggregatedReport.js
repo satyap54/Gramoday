@@ -10,13 +10,13 @@ const moment = require('moment');
 */
 
 const getAggregatedReport = async (req, res)=>{
-  const { reportID } = req.query.reportID;
+  const { reportID } = req.query;
   if(!reportID){
     return res.status(400).send("reportID not specified");
   }
   
   try{
-    const data = await Report.findById(resportID, '_id cmdtyName cmdtyID marketID marketName users updatedAt pricePerKg').exec();
+    const data = await Report.findById(reportID, '_id cmdtyName cmdtyID marketID marketName users updatedAt pricePerKg').exec();
     if(!data){
       return res.status(404).send("No such report exists");
     }
@@ -34,7 +34,7 @@ const getAggregatedReport = async (req, res)=>{
       "price" : pricePerKg
     });
   }catch(e){
-    console.log(e);
+    console.error(e);
     res.status(500).send("Try again");
   }
 };

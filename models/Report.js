@@ -3,10 +3,10 @@ const { Schema, model } = mongoose;
 
 const reportSchema = new Schema(
   {
-    "cmdtyName" : { type : String, required : false },
-    "cmdtyId" : { type : String, required : true },
-    "marketId" : { type : String, required : true },
-    "marketName" : { type : String, required : false },
+    "cmdtyName" : { type : String, required : true },
+    "cmdtyID" : { type : String, required : true },
+    "marketID" : { type : String, required : true },
+    "marketName" : { type : String, required : true },
     "users" : { type : [String], required : true },
     "pricePerKg" : { type : mongoose.Decimal128, required : true }
   },
