@@ -10,11 +10,11 @@ const postReport = async (req, res)=>{
     return res.status(400).send("Invalid Conversion Factor or Price");
   }  
   convFctr = parseFloat(convFctr);
-  // TODO convert price to pricePerKg
+  // TODO: convert price to pricePerKg
   price = parseFloat(price);
   price /= convFctr;
 
-  try{
+  try{434545
     let report = await Report.findOne({ "marketID" : marketID , "cmdtyID" : cmdtyID});
     // if there is no report, create one
     if(!report){
