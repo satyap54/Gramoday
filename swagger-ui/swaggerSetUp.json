@@ -1,0 +1,108 @@
+{
+  "swagger" : "2.0",
+  
+  "info" : {
+    "title" : "Gramoday",
+    "contact" : {
+      "name" : "Satyabrat Panda",
+      "email" : "satybratp.m.2000@gmail.com"
+    },
+    "servers" : ["http://localhost:8000/", "http://localhost:8001/"]
+  },
+  
+  "apis" : ["../index.js"],
+
+  "paths" : {
+    "/reports" : {
+      "get" : {
+        "summary" : "Fetch a specified report using ID",
+        "produces" : "application/json",
+        "parameters" : [
+          {
+            "name" : "reportID", 
+            "description" : "ID of a report in the db",
+            "type" : "string",
+            "in" : "query",
+            "required" : true
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "reportID not provided as query parameter"
+          }
+        }
+      },
+
+      "post" : {
+        "summary" : "Post details of a commodity in a market",
+        "produces" : "application/json",
+        
+        "parameters":[
+          {
+            "name": "Request Body",
+            "description": "Details to create/update a market-commodity entity",
+            "type": "object",
+            "in": "body",
+            "required": true,
+            "properties" : {
+              "reportDetails" : {
+                "type" :"object",
+                "required" : true,
+                "properties" : {
+                  "userID": {
+                    "type" : "string",
+                    "required" : true
+                  },
+                  "marketID" : {
+                    "type" : "string",
+                    "required" : true
+                  },
+                  "marketName" : {
+                    "type" : "string",
+                    "required" : false
+                  },
+                  "cmdtyID" : {
+                    "type" :"string",
+                    "required" : false
+                  },
+                  "marketType" : {
+                    "type" : "string",
+                    "required" : false
+                  },
+                  "cmdtyName" : {
+                    "type" : "string",
+                    "required" : true
+                  },
+                  "priceUnit" : {
+                    "type" : "string",
+                    "required" : true
+                  },
+                  "convFctr" : {
+                    "type" : "number",
+                    "required" : true
+                  },
+                  "price" : {
+                    "type" : "number",
+                    "required" : true
+                  }
+                }
+              }
+            }
+          }
+        ],
+
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "Invalid Form Data"
+          }
+        }
+      }
+    }
+  }
+}
