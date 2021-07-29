@@ -1,6 +1,9 @@
 const Report = require('../models/Report');
 
 
+/*
+  Post details of a market commodity combination (can contributed by 2 users).
+*/
 const postReport = async (req, res)=>{
   let { userID, marketID, marketName, cmdtyID, marketType, cmdtyName, priceUnit, convFctr, price } = 
     req.body.reportDetails;
@@ -9,14 +12,18 @@ const postReport = async (req, res)=>{
   if(isNaN(convFctr) || isNaN(price)){
     return res.status(400).send("Invalid Conversion Factor or Price");
   }  
+  // marketID and cmdtyID are a must
+  if(!marketID || !cmdtyID){
+    return res.status(400).send("Missing marketID or cmdtyID")
+  }
+
   convFctr = parseFloat(convFctr);
-  // TODO: convert price to pricePerKg
   price = parseFloat(price);
   price /= convFctr;
 
   try{434545
     let report = await Report.findOne({ "marketID" : marketID , "cmdtyID" : cmdtyID});
-    // if there is no report, create one
+    // if there is no report, create one, else take aggregated price
     if(!report){
       report = await Report.create({
         "cmdtyName" : cmdtyName,
