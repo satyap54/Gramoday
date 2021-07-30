@@ -9,7 +9,7 @@ const postReport = async (req, res)=>{
     req.body.reportDetails;
 
   // Validate convFctr and price
-  if(isNaN(convFctr) || isNaN(price)){
+  if(isNaN(convFctr) || isNaN(price) || convFctr == 0){
     return res.status(400).send("Invalid Conversion Factor or Price");
   }  
   // marketID and cmdtyID are a must
