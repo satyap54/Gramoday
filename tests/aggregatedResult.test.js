@@ -45,7 +45,7 @@ const post3 = {
 const calculateScore = (A, B)=>{
   const price1 = parseFloat(A["reportDetails"]["price"]), price2 = parseFloat(B["reportDetails"]["price"]),
     factor1 = parseFloat(A["reportDetails"]["convFctr"]), factor2 = parseFloat(B["reportDetails"]["convFctr"]);
-  return String(((price1/factor1) + (price2/factor2))/2.0); 
+  return (((price1/factor1) + (price2/factor2))/2.0); 
 }
 
 describe("Data consistency", ()=>{
@@ -60,13 +60,13 @@ describe("Data consistency", ()=>{
     expect(response.status).to.eql(200);
     const { reportID } = response.body;
     response = await request.get(`/reports?reportID=${reportID}`);
-    // TODO: calculate the expectedPrice
+    console.log(response.body);
     const expectedPrice = calculateScore(post1, post2);
     expect(response.body.price).to.eql(expectedPrice);
   });
 
-  it("Restict modification of a market-commodity combination to only 2 users", async()=>{
-    let response = await request.post("/reports").send(post3);
-    expect(response.status).to.eql(400);
-  });
+  // it("Restict modification of a market-commodity combination to only 2 users", async()=>{
+  //   let response = await request.post("/reports").send(post3);
+  //   expect(response.status).to.eql(400);
+  // });
 });

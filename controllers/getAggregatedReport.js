@@ -16,12 +16,16 @@ const getAggregatedReport = async (req, res)=>{
   }
   
   try{
-    const data = await Report.findById(reportID, '_id cmdtyName cmdtyID marketID marketName users updatedAt pricePerKg').exec();
+    const data = await Report.findById(reportID, '_id cmdtyName cmdtyID marketID marketName users updatedAt totalPrice').exec();
     if(!data){
       return res.status(404).send("No such report exists");
     }
     
-    const { _id, cmdtyName, cmdtyID, marketID, marketName, users, updatedAt, pricePerKg } = data;
+    let { _id, cmdtyName, cmdtyID, marketID, marketName, users, updatedAt, totalPrice } = data;
+    totalPrice = parseFloat(totalPrice.toString());
+    const totalPpl = parseFloat(users.length);
+    //console.log("total Price", totalPrice, data);
+    const pricePerKg = totalPrice/totalPpl;
     res.status(200).json({
       "_id" : _id,
       "cmdtyName" : cmdtyName,
@@ -31,7 +35,7 @@ const getAggregatedReport = async (req, res)=>{
       "users" : users,
       "timestamp" : moment(updatedAt).unix(),
       "priceUnit" : "Kg",
-      "price" : pricePerKg.toString()
+      "price" : pricePerKg
     });
   }catch(e){
     console.error(e);
