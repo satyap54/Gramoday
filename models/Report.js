@@ -8,19 +8,12 @@ const reportSchema = new Schema(
     "marketID" : { type : String, required : true },
     "marketName" : { type : String, required : true },
     "users" : { type : [String], required : true },
-    "pricePerKg" : { type : mongoose.Decimal128, required : true }
+    "totalPrice" : { type : mongoose.Decimal128, required : true }
   },
   { timestamps : true }
 )
 
 reportSchema.index({ cmdtyId : 1, marketId : 1 }, { unique : true });
-
-// A commodity-market entity should be modified by only the two assigned people
-reportSchema.path('users').validate((arr)=>{
-  if(arr.length > 2)
-    throw new Error("Number of users updating the same commodity cannot be greater than 2");
-});
-
 const Report = model("Report", reportSchema);
 
 module.exports = Report;

@@ -21,7 +21,7 @@ const postReport = async (req, res)=>{
   price = parseFloat(price);
   price /= convFctr;
 
-  try{434545
+  try{
     let report = await Report.findOne({ "marketID" : marketID , "cmdtyID" : cmdtyID});
     // if there is no report, create one, else take aggregated price
     if(!report){
@@ -31,15 +31,12 @@ const postReport = async (req, res)=>{
         "marketID" : marketID,
         "marketName" : marketName,
         "users" : [userID, ],
-        "pricePerKg" : price.toString()
+        "totalPrice" : price.toString()
       })
     }else{
-      if(report.users.length == 2){
-        return res.status(400).send("Only 2 people can update a cmdty-market entity");
-      }
-      const prevPrice = parseFloat(report.pricePerKg.toString());
-      const newPrice = (prevPrice + price)/2.0;
-      report.pricePerKg = newPrice;
+      const prevPrice = parseFloat(report.totalPrice.toString());
+      const newPrice = (prevPrice + price);
+      report.totalPrice = newPrice;
       report.users.push(userID);
       await report.save();
     }
